@@ -26,6 +26,17 @@ class EpubParserService {
       // Decode the ZIP archive
       final archive = ZipDecoder().decodeBytes(bytes);
 
+      // Build resources map: key = normalized archive path, value = file bytes
+      final resources = <String, List<int>>{};
+      for (final file in archive.files) {
+        try {
+          final normalized = _normalizePath(file.name);
+          resources[normalized] = file.content as List<int>;
+        } catch (_) {
+          // skip any entries we can't read
+        }
+      }
+
       // Find the container.xml file
       final containerEntry = archive.findFile('META-INF/container.xml');
       if (containerEntry == null) {
@@ -108,10 +119,15 @@ class EpubParserService {
         filePath: filePath,
         fileSize: bytes.length,
         createdAt: DateTime.now(),
+        resources: resources,
       );
     } catch (e) {
       throw Exception('Failed to parse EPUB: $e');
     }
+  }
+
+  static String _normalizePath(String path) {
+    return path.replaceAll('\\', '/');
   }
 
   /// Parses metadata from OPF XML

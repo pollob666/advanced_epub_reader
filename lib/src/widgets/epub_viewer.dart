@@ -1554,6 +1554,9 @@ class _EpubViewerState extends State<EpubViewer> with TickerProviderStateMixin {
 
         widget.onTextSelected?.call(text);
       },
+      // Pass EPUB resources and current chapter file path for image resolution
+      resources: widget.book.resources,
+      chapterFilePath: widget.book.chapters[_currentChapterIndex].filePath,
     );
   }
 

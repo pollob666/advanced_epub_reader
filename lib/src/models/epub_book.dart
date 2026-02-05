@@ -21,6 +21,9 @@ class EpubBook {
   /// The book's manifest (all resources)
   final Map<String, String> manifest;
 
+  /// Map of raw resource bytes keyed by the path inside the EPUB archive
+  final Map<String, List<int>> resources;
+
   /// The book's table of contents
   final List<Map<String, dynamic>> tableOfContents;
 
@@ -52,6 +55,7 @@ class EpubBook {
     this.fileSize,
     this.lastOpened,
     required this.createdAt,
+    this.resources = const {},
   });
 
   /// Creates a copy of this book with updated values
@@ -62,6 +66,7 @@ class EpubBook {
     List<int>? coverImage,
     List<String>? spine,
     Map<String, String>? manifest,
+    Map<String, List<int>>? resources,
     List<Map<String, dynamic>>? tableOfContents,
     List<Map<String, dynamic>>? navigation,
     String? filePath,
@@ -82,6 +87,7 @@ class EpubBook {
       fileSize: fileSize ?? this.fileSize,
       lastOpened: lastOpened ?? this.lastOpened,
       createdAt: createdAt ?? this.createdAt,
+      resources: resources ?? this.resources,
     );
   }
 
@@ -99,6 +105,7 @@ class EpubBook {
       'fileSize': fileSize,
       'lastOpened': lastOpened?.toIso8601String(),
       'createdAt': createdAt.toIso8601String(),
+      'resources': resources.map((k, v) => MapEntry(k, v)),
     };
   }
 
@@ -126,6 +133,9 @@ class EpubBook {
       createdAt: json['createdAt'] != null
           ? DateTime.parse(json['createdAt'] as String)
           : DateTime.now(),
+      resources: json['resources'] != null
+          ? (json['resources'] as Map).map((k, v) => MapEntry(k as String, List<int>.from(v as List)))
+          : {},
     );
   }
 
