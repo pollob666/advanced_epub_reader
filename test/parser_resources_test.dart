@@ -53,7 +53,7 @@ void main() {
     final svgBytes = await File('test/assets/tiny.svg').readAsBytes();
     archive.addFile(ArchiveFile('OEBPS/images/tiny.svg', svgBytes.length, svgBytes));
 
-    final bytes = ZipEncoder().encode(archive)!;
+    final bytes = ZipEncoder().encode(archive);
 
     final book = EpubParserService.parseFromBytes(Uint8List.fromList(bytes));
 
