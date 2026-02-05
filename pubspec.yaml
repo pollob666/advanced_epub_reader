@@ -1,0 +1,33 @@
+name: advanced_epub_reader
+description: "A comprehensive Flutter package for reading EPUB books with advanced features like customizable themes, bookmarks, annotations, and more."
+version: 0.1.1-beta.1
+homepage: https://github.com/pollob666/advanced_epub_reader
+repository: https://github.com/pollob666/advanced_epub_reader
+issue_tracker: https://github.com/pollob666/advanced_epub_reader/issues
+
+environment:
+  sdk: ^3.8.1
+  flutter: ">=3.16.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  archive: ^3.4.9
+  xml: ^6.5.0
+  path_provider: ^2.1.2
+  shared_preferences: ^2.2.2
+  html: ^0.15.0
+  flutter_html: ^3.0.0-beta.2
+  webview_flutter: ^4.7.0
+  google_fonts: ^6.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  # Assets can be added here if needed
+  # assets:
+  #   - assets/
+  uses-material-design: true
