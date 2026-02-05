@@ -115,7 +115,7 @@ class EpubContentBuilder {
           final selectedText = selection?.plainText ?? '';
           if (selectedText.isNotEmpty) {
             debugPrint(
-              '[SelectionArea] Selection made: "${selectedText.length > 120 ? selectedText.substring(0, 120) + '…' : selectedText}"',
+              '[SelectionArea] Selection made: "${selectedText.length > 120 ? '${selectedText.substring(0, 120)}…' : selectedText}"',
             );
             onTextSelected?.call(selectedText);
           } else {
@@ -183,7 +183,7 @@ class EpubContentBuilder {
           final selectedText = selection?.plainText ?? '';
           if (selectedText.isNotEmpty) {
             debugPrint(
-              '[SelectionArea] Selection made: "${selectedText.length > 120 ? selectedText.substring(0, 120) + '…' : selectedText}"',
+              '[SelectionArea] Selection made: "${selectedText.length > 120 ? '${selectedText.substring(0, 120)}…' : selectedText}"',
             );
             onTextSelected?.call(selectedText);
           } else {

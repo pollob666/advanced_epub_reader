@@ -21,7 +21,6 @@ import 'table_of_contents.dart';
 import 'epub_content_builder.dart';
 // Removed: note dialog; notes handled externally
 // Page jump dialog not used directly; use PageJumpSheet via ReadingControls
-import 'dart:typed_data';
 import '../services/search_controller.dart';
 import 'highlight_sheet.dart';
 import 'bookmark_sheet.dart';
@@ -172,7 +171,7 @@ class _EpubViewerState extends State<EpubViewer> with TickerProviderStateMixin {
 
   bool _isLoading = true;
   bool _showControls = false;
-  bool _showTableOfContents = false;
+  final bool _showTableOfContents = false;
   // Fullscreen mode removed; controls are shown/hidden dynamically by tap
   String _currentContent = '';
   String _renderedContent = '';
@@ -187,7 +186,7 @@ class _EpubViewerState extends State<EpubViewer> with TickerProviderStateMixin {
 
   // Reading statistics
   DateTime? _readingStartTime;
-  int _wordsRead = 0;
+  final int _wordsRead = 0;
 
   // Selection-related fields
   GlobalKey _selectionAreaKey = GlobalKey();
@@ -358,7 +357,7 @@ class _EpubViewerState extends State<EpubViewer> with TickerProviderStateMixin {
       }
 
       // Clean and normalize the selected text for better matching
-      String _normalize(String s) {
+      String normalize(String s) {
         return s
             .replaceAll('\u00A0', ' ') // nbsp
             .replaceAll('&nbsp;', ' ')
@@ -369,7 +368,7 @@ class _EpubViewerState extends State<EpubViewer> with TickerProviderStateMixin {
             .trim();
       }
 
-      final cleanSelectedText = _normalize(selectedText);
+      final cleanSelectedText = normalize(selectedText);
 
       // Build style color in rgba
       final rgba =
@@ -379,7 +378,7 @@ class _EpubViewerState extends State<EpubViewer> with TickerProviderStateMixin {
       bool highlightApplied = false;
 
       // Utility to pick the match closest to the current reading position
-      RegExpMatch? _pickBestMatch(Iterable<RegExpMatch> matches, String hay) {
+      RegExpMatch? pickBestMatch(Iterable<RegExpMatch> matches, String hay) {
         if (matches.isEmpty) return null;
         final int target = (hay.length * _currentPosition)
             .clamp(0, hay.length - 1)
@@ -402,7 +401,7 @@ class _EpubViewerState extends State<EpubViewer> with TickerProviderStateMixin {
           RegExp.escape(cleanSelectedText),
           caseSensitive: false,
         );
-        final directMatch = _pickBestMatch(
+        final directMatch = pickBestMatch(
           directPattern.allMatches(_renderedContent),
           _renderedContent,
         );
@@ -432,12 +431,12 @@ class _EpubViewerState extends State<EpubViewer> with TickerProviderStateMixin {
             .split(RegExp(r'\s+'))
             .where((w) => w.isNotEmpty)
             .toList();
-        if (words.length > 0) {
+        if (words.isNotEmpty) {
           // Create a pattern that matches words with any HTML content between them
           final wordPatterns = words.map((word) {
             final w = RegExp.escape(
               word,
-            ).replaceAll('-', '[\u2013\u2014\-]'); // accept various dashes
+            ).replaceAll('-', '[\u2013\u2014-]'); // accept various dashes
             return w;
           }).toList();
           final flexiblePattern = RegExp(
@@ -445,7 +444,7 @@ class _EpubViewerState extends State<EpubViewer> with TickerProviderStateMixin {
             caseSensitive: false,
           );
 
-          final flexibleMatch = _pickBestMatch(
+          final flexibleMatch = pickBestMatch(
             flexiblePattern.allMatches(_renderedContent),
             _renderedContent,
           );
@@ -475,12 +474,12 @@ class _EpubViewerState extends State<EpubViewer> with TickerProviderStateMixin {
       // Strategy 3: Strip HTML and match plain text
       if (!highlightApplied) {
         debugPrint('[Highlight] Trying plain text matching...');
-        final plainText = _normalize(_stripHtmlToPlainText(_renderedContent));
+        final plainText = normalize(_stripHtmlToPlainText(_renderedContent));
         final plainPattern = RegExp(
           RegExp.escape(cleanSelectedText),
           caseSensitive: false,
         );
-        final plainMatch = _pickBestMatch(
+        final plainMatch = pickBestMatch(
           plainPattern.allMatches(plainText),
           plainText,
         );
@@ -560,12 +559,12 @@ class _EpubViewerState extends State<EpubViewer> with TickerProviderStateMixin {
       // Strategy 4: Fallback to raw content matching
       if (!highlightApplied) {
         debugPrint('[Highlight] Trying raw content matching...');
-        final hay = _normalize(_currentContent);
+        final hay = normalize(_currentContent);
         final rawPattern = RegExp(
           RegExp.escape(cleanSelectedText),
           caseSensitive: false,
         );
-        final rawMatch = _pickBestMatch(rawPattern.allMatches(hay), hay);
+        final rawMatch = pickBestMatch(rawPattern.allMatches(hay), hay);
 
         if (rawMatch != null) {
           debugPrint(
@@ -595,7 +594,7 @@ class _EpubViewerState extends State<EpubViewer> with TickerProviderStateMixin {
       } else {
         debugPrint('[Highlight] No match found for text: "$cleanSelectedText"');
         debugPrint(
-          '[Highlight] Content preview: "${_renderedContent.length > 200 ? _renderedContent.substring(0, 200) + '...' : _renderedContent}"',
+          '[Highlight] Content preview: "${_renderedContent.length > 200 ? '${_renderedContent.substring(0, 200)}...' : _renderedContent}"',
         );
       }
     } catch (e) {
@@ -1106,7 +1105,7 @@ class _EpubViewerState extends State<EpubViewer> with TickerProviderStateMixin {
     left = left.clamp(margin, (screenSize.width - tb.width - margin));
     top = top.clamp(margin, (screenSize.height - tb.height - margin));
 
-    String _resolveSelected() {
+    String resolveSelected() {
       return _selectionState.selectedText.isNotEmpty
           ? _selectionState.selectedText
           : _selectionFrozenText;
@@ -1120,7 +1119,7 @@ class _EpubViewerState extends State<EpubViewer> with TickerProviderStateMixin {
         theme: _currentTheme,
         selectedText: _selectionFrozenText,
         onCopy: () {
-          final text = _resolveSelected();
+          final text = resolveSelected();
           if (text.isEmpty) return;
           Clipboard.setData(ClipboardData(text: text));
           ScaffoldMessenger.of(context).showSnackBar(
@@ -1132,19 +1131,19 @@ class _EpubViewerState extends State<EpubViewer> with TickerProviderStateMixin {
           );
         },
         onBookmark: () {
-          final text = _resolveSelected();
+          final text = resolveSelected();
           if (text.isNotEmpty) {
             _showBookmarkSheet(text);
           }
         },
         onHighlight: () {
-          final text = _resolveSelected();
+          final text = resolveSelected();
           if (text.isNotEmpty) {
             _showHighlightSheet(text);
           }
         },
         onNote: () {
-          final text = _resolveSelected();
+          final text = resolveSelected();
           if (text.isNotEmpty) {
             _showNoteSheet(text);
           }
@@ -1222,7 +1221,7 @@ class _EpubViewerState extends State<EpubViewer> with TickerProviderStateMixin {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    _formatBookTitle(widget.book.metadata.title) + ' [DEV]',
+                    '${_formatBookTitle(widget.book.metadata.title)} [DEV]',
                     style: TextStyle(
                       fontSize: titleFontSize,
                       fontWeight: titleFontWeight,
@@ -2107,7 +2106,7 @@ class _EpubViewerState extends State<EpubViewer> with TickerProviderStateMixin {
         final style = occurrence == emphasizeIndex
             ? 'background-color: rgba(255,230,0,0.9); outline: 1px solid rgba(0,0,0,0.2);'
             : 'background-color: rgba(255,230,0,0.4);';
-        buffer.write('<span style="' + style + '">' + mid + '</span>');
+        buffer.write('<span style="$style">$mid</span>');
         debugPrint('[Search] Highlighted occurrence $occurrence: "$mid"');
         last = m.end;
         occurrence++;

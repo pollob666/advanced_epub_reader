@@ -70,7 +70,7 @@ class ReadingTheme {
   /// Creates a theme with inverted colors
   ReadingTheme createInvertedTheme() {
     return ReadingTheme(
-      name: '${name} (Inverted)',
+      name: '$name (Inverted)',
       backgroundColor: textColor,
       textColor: backgroundColor,
       accentColor: accentColor,
@@ -85,7 +85,7 @@ class ReadingTheme {
   /// Creates a high contrast version of this theme
   ReadingTheme createHighContrastTheme() {
     return ReadingTheme(
-      name: '${name} (High Contrast)',
+      name: '$name (High Contrast)',
       backgroundColor: backgroundColor.computeLuminance() > 0.5
           ? Colors.black
           : Colors.white,
@@ -105,7 +105,7 @@ class ReadingTheme {
   ReadingTheme createColorTemperatureTheme({required bool isWarm}) {
     if (isWarm) {
       return ReadingTheme(
-        name: '${name} (Warm)',
+        name: '$name (Warm)',
         backgroundColor: _adjustColorTemperature(backgroundColor, isWarm: true),
         textColor: _adjustColorTemperature(textColor, isWarm: true),
         accentColor: _adjustColorTemperature(accentColor, isWarm: true),
@@ -120,7 +120,7 @@ class ReadingTheme {
       );
     } else {
       return ReadingTheme(
-        name: '${name} (Cool)',
+        name: '$name (Cool)',
         backgroundColor: _adjustColorTemperature(
           backgroundColor,
           isWarm: false,

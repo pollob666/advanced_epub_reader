@@ -36,8 +36,9 @@ class EpubUtils {
   static String formatFileSize(int bytes) {
     if (bytes < 1024) return '$bytes B';
     if (bytes < 1024 * 1024) return '${(bytes / 1024).toStringAsFixed(1)} KB';
-    if (bytes < 1024 * 1024 * 1024)
+    if (bytes < 1024 * 1024 * 1024) {
       return '${(bytes / (1024 * 1024)).toStringAsFixed(1)} MB';
+    }
     return '${(bytes / (1024 * 1024 * 1024)).toStringAsFixed(1)} GB';
   }
 
@@ -222,30 +223,37 @@ class EpubUtils {
 
     // Required fields
     if (metadata['title'] != null &&
-        metadata['title'].toString().trim().isNotEmpty)
+        metadata['title'].toString().trim().isNotEmpty) {
       score += 30;
+    }
     if (metadata['creator'] != null &&
-        metadata['creator'].toString().trim().isNotEmpty)
+        metadata['creator'].toString().trim().isNotEmpty) {
       score += 20;
+    }
     if (metadata['language'] != null &&
-        metadata['language'].toString().trim().isNotEmpty)
+        metadata['language'].toString().trim().isNotEmpty) {
       score += 15;
+    }
     if (metadata['identifier'] != null &&
-        metadata['identifier'].toString().trim().isNotEmpty)
+        metadata['identifier'].toString().trim().isNotEmpty) {
       score += 15;
+    }
 
     // Optional fields
     if (metadata['publisher'] != null &&
-        metadata['publisher'].toString().trim().isNotEmpty)
+        metadata['publisher'].toString().trim().isNotEmpty) {
       score += 5;
+    }
     if (metadata['date'] != null) score += 5;
     if (metadata['description'] != null &&
-        metadata['description'].toString().trim().isNotEmpty)
+        metadata['description'].toString().trim().isNotEmpty) {
       score += 5;
+    }
     if (metadata['subjects'] != null &&
         metadata['subjects'] is List &&
-        metadata['subjects'].isNotEmpty)
+        metadata['subjects'].isNotEmpty) {
       score += 5;
+    }
 
     return score;
   }

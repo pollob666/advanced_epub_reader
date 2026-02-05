@@ -306,15 +306,9 @@ class EpubParserService {
       ArchiveFile? entry = archive.findFile(href);
 
       // If not found, try with different path combinations
-      if (entry == null) {
-        // Try with OEBPS/ prefix (common in EPUBs)
-        entry = archive.findFile('OEBPS/$href');
-      }
+      entry ??= archive.findFile('OEBPS/$href');
 
-      if (entry == null) {
-        // Try with text/ prefix (some EPUBs use this)
-        entry = archive.findFile('text/$href');
-      }
+      entry ??= archive.findFile('text/$href');
 
       if (entry == null) {
         // Try to find by filename only (ignore directory)

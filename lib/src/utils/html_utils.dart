@@ -41,17 +41,17 @@ class HtmlUtils {
         * {
           font-family: ${FontUtils.getPrimaryFontFamily(fontFamily)} !important;
           font-size: ${fontSize}px !important;
-          line-height: ${lineHeight} !important;
+          line-height: $lineHeight !important;
         }
         body {
           font-family: ${FontUtils.getPrimaryFontFamily(fontFamily)} !important;
           font-size: ${fontSize}px !important;
-          line-height: ${lineHeight} !important;
+          line-height: $lineHeight !important;
         }
         p, div, span, h1, h2, h3, h4, h5, h6 {
           font-family: ${FontUtils.getPrimaryFontFamily(fontFamily)} !important;
           font-size: ${fontSize}px !important;
-          line-height: ${lineHeight} !important;
+          line-height: $lineHeight !important;
         }
       ''';
 
@@ -117,17 +117,17 @@ class HtmlUtils {
         * {
           font-family: ${FontUtils.getPrimaryFontFamily(fontFamily)} !important;
           font-size: ${fontSize}px !important;
-          line-height: ${lineHeight} !important;
+          line-height: $lineHeight !important;
         }
         body {
           font-family: ${FontUtils.getPrimaryFontFamily(fontFamily)} !important;
           font-size: ${fontSize}px !important;
-          line-height: ${lineHeight} !important;
+          line-height: $lineHeight !important;
         }
         p, div, span, h1, h2, h3, h4, h5, h6 {
           font-family: ${FontUtils.getPrimaryFontFamily(fontFamily)} !important;
           font-size: ${fontSize}px !important;
-          line-height: ${lineHeight} !important;
+          line-height: $lineHeight !important;
         }
       ''';
 

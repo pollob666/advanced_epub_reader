@@ -1,4 +1,4 @@
-library advanced_epub_reader;
+library;
 
 // Main widgets
 export 'src/widgets/epub_viewer.dart';

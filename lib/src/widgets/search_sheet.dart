@@ -317,7 +317,7 @@ class SearchSheet extends StatelessWidget {
                                         ),
                                         const SizedBox(width: 12),
                                         // Results counter
-                                        Container(
+                                        SizedBox(
                                           height: 44,
                                           child: Center(
                                             child: Text(

@@ -143,7 +143,7 @@ class _TypographySheetState extends State<TypographySheet> {
                               ),
                             ),
                           Text(
-                            '${_fontSize.toStringAsFixed(1)}',
+                            _fontSize.toStringAsFixed(1),
                             style: TextStyle(
                               color: widget.theme.accentColor,
                               fontSize: 18,
@@ -226,7 +226,7 @@ class _TypographySheetState extends State<TypographySheet> {
                       ),
                     ],
                   ),
-                  Container(
+                  SizedBox(
                     height: 50,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
@@ -307,7 +307,7 @@ class _TypographySheetState extends State<TypographySheet> {
                               ),
                             ),
                           Text(
-                            '${_lineHeight.toStringAsFixed(1)}',
+                            _lineHeight.toStringAsFixed(1),
                             style: TextStyle(
                               color: widget.theme.accentColor,
                               fontSize: 18,
@@ -464,7 +464,7 @@ class _TypographySheetState extends State<TypographySheet> {
                       ),
                     ],
                   ),
-                  Container(
+                  SizedBox(
                     height: 50,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,

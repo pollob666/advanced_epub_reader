@@ -142,7 +142,9 @@ class HighlightUtils {
         // Skip empty text nodes
         nodes.add(n);
       } else if (n is html_dom.Element) {
-        for (final c in n.nodes) collect(c);
+        for (final c in n.nodes) {
+          collect(c);
+        }
       }
     }
 
